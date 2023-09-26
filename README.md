@@ -8,10 +8,10 @@ The repository is structured as follows:
 - `tp2-conocimiento-incertidumbre/`: contains the code for the second practical experience, which consists of the implementation of a knowledge and uncertainty agent.
 
 - `tp3-aprendizaje/`: contains the code for the third practical experience, which consists of the implementation of a learning agent.
-<br> :construction: **Not implemented yet.**
+:construction: **Not implemented yet.**
 
 - `tp4-optimizacion-aplicaciones/`: contains the code for the fourth practical experience, which consists of the implementation of an optimization agent.
-<br> :construction: **Not implemented yet.**
+:construction: **Not implemented yet.**
 
 ### How to run the code
 Each folder contains a `README.md` file with the instructions for the corresponding practical experience.
