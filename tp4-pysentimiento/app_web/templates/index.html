@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+
+<head>
+    <title>Análisis con IA de comentarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="container dark">
+    <div class="row mt-3">
+        <div class="col-12">
+            <h1>Análisis con IA de comentarios</h1>
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Comentario</label>
+                    <textarea class="form-control" name="comment" rows="4" cols="50"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Analizar Comentario</button>
+            </form>
+        </div>
+    </div>
+    {% if sentiment_result %}
+    <div class="row mt-5">
+        <h3 class="mb-3"> Resultados </h3>
+        <div class="col-3">
+            <h5>Sentimiento
+                {% if sentiment_result.output == 'NEG' %}
+                <span class="badge bg-danger">Negativo</span> {% elif sentiment_result.output == 'NEU' %}
+                <span class="badge bg-warning text-dark">Neutral</span> {% elif sentiment_result.output == 'POS' %}
+                <span class="badge bg-success">Positivo</span> {% endif %}
+            </h5>
+            <p>Probabilidades:</p>
+            <ol class="list-group list-group-flush">
+                <li class="list-group-item">Positivo: {{ sentiment_result.probas.POS }}</li>
+                <li class="list-group-item">Neutral: {{ sentiment_result.probas.NEU }}</li>
+                <li class="list-group-item">Negativo: {{ sentiment_result.probas.NEG }}</li>
+            </ol>
+        </div>
+
+        {% endif %}
+        {% if emotion_result %}
+
+        <div class="col-3">
+            <h5>Emoción
+                {% if emotion_result.output == 'anger' %}
+                <span class="badge bg-danger">Enojo</span> {% elif emotion_result.output == 'sadness' %}
+                <span class="badge bg-primary">Tristeza</span> {% elif emotion_result.output == 'disgust' %}
+                <span class="badge bg-dark">Disgusto</span> {% elif emotion_result.output == 'others' %}
+                <span class="badge bg-secondary">Otras</span> {% elif emotion_result.output == 'fear' %}
+                <span class="badge bg-dark text-light">Miedo</span> {% elif emotion_result.output == 'surprise' %}
+                <span class="badge bg-warning text-dark">Sorpresa</span> {% elif emotion_result.output == 'joy' %}
+                <span class="badge bg-success">Alegría</span> {% endif %}
+            </h5>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Alegría: {{ emotion_result.probas.joy }}</li>
+                <li class="list-group-item">Tristeza: {{ emotion_result.probas.sadness }}</li>
+                <li class="list-group-item">Enojo: {{ emotion_result.probas.anger }}</li>
+                <li class="list-group-item">Disgusto: {{ emotion_result.probas.disgust }}</li>
+                <li class="list-group-item">Miedo: {{ emotion_result.probas.fear }}</li>
+                <li class="list-group-item">Sorpresa: {{ emotion_result.probas.surprise }}</li>
+                <li class="list-group-item">Otras: {{ emotion_result.probas.others }}</li>
+            </ul>
+        </div>
+
+        {% endif %}
+        {% if hate_result %}
+
+        <div class="col-3">
+            <h5>Odio
+            {% if hate_result.probas.hateful > 0.5 %}
+                <span class="badge bg-danger">Odioso</span> {% elif hate_result.probas.aggressive > 0.5 %}
+                <span class="badge bg-warning text-dark">Agresivo</span> {% else %}
+                <span class="badge bg-success">No odioso</span> {% endif %}
+            </h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Odio: {{ hate_result.probas.hateful }}</li>
+                <li class="list-group-item">Agresión: {{ hate_result.probas.aggressive }}</li>
+            </ul>
+        </div>
+
+        {% endif %}
+        {% if irony_result %}
+
+        <div class="col-3">
+            <h5>Ironía
+                {% if irony_result.output == 'not ironic' %}
+                <span class="badge bg-success">No irónico</span> {% elif irony_result.output == 'ironic' %}
+                <span class="badge bg-danger">Irónico</span> {% endif %}
+            </h5>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Probabilidad de ironía: {{ irony_result.probas.ironic }}</li>
+            </ul>
+        </div>
+
+        {% endif %}
+    </div>
+</div>
+
+</body>
+
+</html>
